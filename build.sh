@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
+set -x
+
 cd /build
 rm -rf ./nDPI
+
 if [ -f "master.tar" ]; then
 	tar xvf master.tar
 else 
-	git clone -b netfilter https://github.com/vel21ripn/nDPI.git
+	git clone https://github.com/vel21ripn/nDPI.git
+	tar cvf master.tar nDPI
 fi
 cd nDPI
 ./autogen.sh
@@ -50,3 +54,4 @@ strip --strip-debug /build/destdir/lib/modules/$KERNEL_VERSION/extra/xt_ndpi.ko
 #patch -p0 < /build/ipt-makefile.patch && \
 #patch -p0 < /build/src-makefile.patch && \
 
+set +x
